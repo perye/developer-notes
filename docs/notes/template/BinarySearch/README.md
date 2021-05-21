@@ -32,6 +32,10 @@
 - 如果 `nums[mid] < target` ，由于数组有序，`mid` 以及 `mid` 左边的所有元素都小于 `target`，目标元素一定在区间 `[mid + 1, right]`
   里，因此设置 `left = mid + 1`。
 
+<!-- tabs:start -->
+
+#### **Java**
+
 ```java
 class Solution {
 
@@ -64,6 +68,106 @@ class Solution {
 }
 ```
 
+#### **C++**
+
+```cpp
+class Solution {
+   public:
+    int search(vector<int> &nums, int target) {
+        // 特殊用例判断
+        int len = nums.size();
+        if (len == 0) {
+            return -1;
+        }
+        // 在 [left, right] 区间里查找 target
+        int left = 0;
+        int right = len - 1;
+        while (left <= right) {
+            // 为了防止 left + right 整形溢出，写成如下形式
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] > target) {
+                // 下一轮搜索区间：[left, mid - 1]
+                right = mid - 1;
+            } else {
+                // 此时：nums[mid] < target
+                // 下一轮搜索区间：[mid + 1, right]
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+};
+```
+
+#### **Python3**
+
+```python
+class Solution(object):
+
+    def search(self, nums: List[int], target: int) -> int:
+        # 特殊用例判断
+        n = len(nums)
+        if n == 0:
+            return -1
+        # 在 [left, right] 区间里查找target
+        left, right = 0, n - 1
+        while left <= right:
+            # 为了防止 left + right 整形溢出，写成如下形式
+            # Python 使用 BigInteger，所以不用担心溢出，但还是推荐使用如下方式
+            mid = left + (right - left) // 2
+
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                # 下一轮搜索区间：[left, mid - 1]
+                right = mid - 1
+            else:
+                # 此时：nums[mid] < target
+                # 下一轮搜索区间：[mid + 1, right]
+                left = mid + 1
+        return -1
+```
+
+#### **javascript**
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var search = function(nums, target) {
+  // 特殊用例判断
+  let len = nums.length
+  if (len === 0) {
+    return -1
+  }
+  // 在 [left, right] 区间里查找 target
+  let left = 0
+  let right = len - 1
+  while (left <= right) {
+    // 为了防止 left + right 整形溢出，写成如下形式
+    let mid = left + ((right - left) >> 1)
+    if (nums[mid] === target) {
+      return mid
+    } else if (nums[mid] > target) {
+      // 下一轮搜索区间：[left, mid - 1]
+      right = mid - 1
+    } else {
+      // 此时：nums[mid] < target
+      // 下一轮搜索区间：[mid + 1, right]
+      left = mid + 1
+    }
+  }
+  return -1
+};
+```
+
+<!-- tabs:end -->
+
 **注意事项：**
 
 1. 思考策略是：永远去想下一轮目标元素应该在哪个区间里：
@@ -82,47 +186,167 @@ class Solution {
 
 #### 版本1
 
+<!-- tabs:start -->
+
+#### **Java**
+
 ```java
-class Solution {
-    public int search(int[] nums, int left, int right, int target) {
-        while (left < right) {
-            // 选择中位数时下取整
-            int mid = left + (right - left) / 2;
-            if (check(mid)) {
-                // 下一轮搜索区间是 [mid + 1, right]
-                left = mid + 1;
-            } else {
-                // 下一轮搜索区间是 [left, mid]
-                right = mid;
-            }
+public int search(int[] nums, int left, int right, int target) {
+    while (left < right) {
+        // 选择中位数时下取整
+        int mid = left + (right - left) / 2;
+        if (check(mid)) {
+            // 下一轮搜索区间是 [mid + 1, right]
+            left = mid + 1
+        } else {
+            // 下一轮搜索区间是 [left, mid]
+            right = mid
         }
-        // 退出循环的时候，程序只剩下一个元素没有看到。
-        // 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
     }
+    // 退出循环的时候，程序只剩下一个元素没有看到。
+    // 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
 }
 ```
+
+#### **C++**
+
+```cpp
+int search(vector<int> &nums, int left, int right, int target) {
+    while (left < right) {
+        // 选择中位数时下取整
+        int mid = left + (right - left) / 2;
+        if (check(mid)) {
+            // 下一轮搜索区间是 [mid + 1, right]
+            left = mid + 1;
+        } else {
+            // 下一轮搜索区间是 [left, mid]
+            right = mid;
+        }
+    }
+    // 退出循环的时候，程序只剩下一个元素没有看到。
+    // 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
+}
+```
+
+#### **Python3**
+
+```python
+def search(nums: List[int], left: int, right: int, target: int) -> int:
+    while left < right:
+        # 选择中位数时下取整
+        mid = left + (right - left) // 2
+        if check(mid):
+            # 下一轮搜索区间是 [mid + 1, right]
+            left = mid + 1
+        else:
+            # 下一轮搜索区间是 [left, mid]
+            right = mid
+    # 退出循环的时候，程序只剩下一个元素没有看到。
+    # 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
+```
+
+#### **Javascript**
+
+```javascript
+function search (nums, left, right, target) {
+    while (left < right) {
+        // 选择中位数时下取整
+        let mid = left + ((right - left) >> 1)
+        if (check(mid)) {
+            // 下一轮搜索区间是 [mid + 1, right]
+            left = mid + 1
+        } else {
+            // 下一轮搜索区间是 [left, mid]
+            right = mid
+        }
+    }
+    // 退出循环的时候，程序只剩下一个元素没有看到。
+    // 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
+}
+```
+
+<!-- tabs:end -->
 
 #### 版本2
 
+<!-- tabs:start -->
+
+#### **Java**
+
 ```java
-class Solution {
-    public int search(int[] nums, int left, int right, int target) {
-        while (left < right) {
-            // 选择中位数时上取整
-            int mid = left + (right - left + 1) / 2;
-            if (check(mid)) {
-                // 下一轮搜索区间是 [left, mid - 1]
-                right = mid - 1;
-            } else {
-                // 下一轮搜索区间是 [mid, right]
-                left = mid;
-            }
+public int search(int[] nums, int left, int right, int target) {
+    while (left < right) {
+        // 选择中位数时上取整
+        int mid = left + (right - left + 1) / 2;
+        if (check(mid)) {
+            // 下一轮搜索区间是 [left, mid - 1]
+            right = mid - 1;
+        } else {
+            // 下一轮搜索区间是 [mid, right]
+            left = mid;
         }
-        // 退出循环的时候，程序只剩下一个元素没有看到。
-        // 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
     }
+    // 退出循环的时候，程序只剩下一个元素没有看到。
+    // 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
 }
 ```
+
+#### **C++**
+
+```cpp
+int search(vector<int> &nums, int left, int right, int target) {
+    while (left < right) {
+        // 选择中位数时上取整
+        int mid = left + (right - left + 1) / 2;
+        if (check(mid)) {
+            // 下一轮搜索区间是 [left, mid - 1]
+            right = mid - 1;
+        } else {
+            // 下一轮搜索区间是 [mid, right]
+            left = mid;
+        }
+    }
+    // 退出循环的时候，程序只剩下一个元素没有看到。
+    // 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
+}
+```
+
+#### **Python3**
+
+```python
+def search(nums: List[int], left: int, right: int, target: int) -> int:
+    while left < right:
+        # 选择中位数时上取整
+        mid = left + (right - left + 1) // 2
+        if check(mid):
+            # 下一轮搜索区间是 [left, mid - 1]
+            right = mid - 1
+        else:
+            # 下一轮搜索区间是 [mid, right]
+            left = mid
+    # 退出循环的时候，程序只剩下一个元素没有看到。
+    # 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
+```
+#### **Javascript**
+
+```javascript
+function search (nums, left, right, target) {
+    while (left < right) {
+        // 选择中位数时上取整
+        let mid = left + ((right - left + 1) >> 1)
+        if (check(mid)) {
+            // 下一轮搜索区间是 [left, mid - 1]
+            right = mid - 1
+        } else {
+            // 下一轮搜索区间是 [mid, right]
+            left = mid
+        }
+    }
+    // 退出循环的时候，程序只剩下一个元素没有看到。
+    // 视情况，是否需要单独判断 left（或者 right）这个下标的元素是否符合题意
+}
+```
+<!-- tabs:end -->
 
 **要点:**
 
@@ -137,28 +361,105 @@ class Solution {
 
 - 循环可以继续的条件是 `while (left + 1 < right)`，这说明在退出循环的时候，一定有 `left + 1 == right` 成立，也就是退出循环以后，区间有 2 个元素，即 `[left, right]`；
 
-```java
-class Solution {
-    public int search(int[] nums, int left, int right, int target) {
-        while (left + 1 < right) {
-            // 选择中位数时下取整
-            int mid = left + (right - left) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] < target) {
-                left = mid;
-            } else {
-                right = mid;
-            }
-        }
+<!-- tabs:start -->
 
-        if (nums[left] == target) {
-            return left;
+#### **Java**
+
+```java
+public int search(int[] nums, int left, int right, int target) {
+    while (left + 1 < right) {
+        // 选择中位数时下取整
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] < target) {
+            left = mid;
+        } else {
+            right = mid;
         }
-        if (nums[right] == target) {
-            return right;
-        }
-        return -1;
     }
+
+    if (nums[left] == target) {
+        return left;
+    }
+    if (nums[right] == target) {
+        return right;
+    }
+    return -1;
 }
 ```
+
+#### **C++**
+
+```cpp
+int search(vector<int> &nums, int left, int right, int target) {
+    while (left + 1 < right) {
+        // 选择中位数时下取整
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] < target) {
+            left = mid;
+        } else {
+            right = mid;
+        }
+    }
+
+    if (nums[left] == target) {
+        return left;
+    }
+    if (nums[right] == target) {
+        return right;
+    }
+    return -1;
+}
+```
+
+#### **Python3**
+
+```python
+def search(nums: List[int], left: int, right: int, target: int) -> int:
+    while left + 1 < right:
+        # 选择中位数时下取整
+        mid = left + (right - left) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            left = mid
+        else:
+            right = mid
+
+    if nums[left] == target:
+        return left
+    if nums[right] == target:
+        return right
+    return -1
+```
+
+#### **Javascript**
+
+```javascript
+function search (nums, left, right, target) {
+    while (left + 1 < right) {
+        // 选择中位数时下取整
+        let mid = left + ((right - left) >> 1)
+        if (nums[mid] === target) {
+            return mid
+        } else if (nums[mid] < target) {
+            left = mid
+        } else {
+            right = mid
+        }
+    }
+
+    if (nums[left] === target) {
+        return left
+    }
+    if (nums[right] === target) {
+        return right
+    }
+    return -1
+}
+```
+
+<!-- tabs:end -->
