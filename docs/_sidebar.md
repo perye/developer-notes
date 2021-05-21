@@ -1,5 +1,6 @@
-* 开发笔记
-  * 算法模板
+* [**开发笔记**](/README)
+  * [**算法模板**](#)
     * [**二分查找**](/notes/template/BinarySearch/README)
-  * 数据结构
+    * [**并查集**](/notes/template/UnionFind/README)
+  * [**数据结构**](#)
 

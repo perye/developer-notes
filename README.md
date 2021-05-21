@@ -6,3 +6,4 @@
 
 * [算法模板](#)
     * [二分查找](https://perye.github.io/developer-notes/#/notes/template/BinarySearch/README)
+    * [并查集](https://perye.github.io/developer-notes/#/notes/template/UnionFind/README)
