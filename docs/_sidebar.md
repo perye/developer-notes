@@ -1,3 +1,4 @@
-<!-- docs/_sidebar.md -->
-* [Home](/)
-* [Guide](guide.md "The greatest guide in the world")
+* 算法模板
+    * [**二分查找**](/algorithm/BinarySearch/README)
+
+
