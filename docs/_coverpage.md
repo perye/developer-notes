@@ -1,15 +1,13 @@
-<!-- _coverpage.md -->
-
 ![logo](_media/icon.svg)
 
-# leetcode 
+# 开发笔记 
 
-> <small>算法模板</small>
+> <small>💪💪💪</small>
 
 * 😀💻🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛😶
 * 😶💻🕜🕝🕞🕟🕠🕡🕢🕣🕤🕥🕦🕧😪
 * 😪👀😎😟😤💪💪💪💻🌕🌗🌑🌞😪😴
 
 
-[GitHub](https://github.com/perye/algorithm-template/)
+[GitHub](https://github.com/perye/developer-notes/)
 [Get Started](README.md)
